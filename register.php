@@ -82,6 +82,20 @@ if (isset($_POST['reg_button'])) {
       if (strlen($password) > 30 || strlen($password < 5)) {
             array_push($error_array, "Your password must be between 5 - 3 characters <br>");
       }
+
+      if(empty($error_array)){
+            $password = md5($password); // encrpyts password before sending to DB
+
+            // generate username by concatenating first and lastname 
+            $username = strtolower($fname . "_" .$lname);
+            $checkusername_query = mysqli_query($con , "SELECT username FROM user WHERE username='$username'");
+
+            //profile pic assignment 
+            $profile_pic = 'assets/Profile_pics/Sample_User_Icon.png';
+
+            // adding values to DB
+            $query = mysqli_query($con, "INSERT INTO users VALUES ('', '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'no', ',' )");
+      }
 }
 ?>
 
