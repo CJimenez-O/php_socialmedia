@@ -19,6 +19,10 @@ require 'formHandlers/login_handler.php';
 <body>
 
       <form action='register.php' method="POST">
+      <?php if (in_array("Incorrect Login<br>", $error_array)) {
+                  echo "Incorrect Login<br>";
+            }
+            ?>
             <input type="email" name="log_email" placeholder="Email Address">
             <input type="password" name="log_password" placeholder="Password">
             <br>

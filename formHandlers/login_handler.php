@@ -10,15 +10,23 @@ if (isset($_POST["login_button"])) {
       $check_database_query = mysqli_query($con, "SELECT * FROM users WHERE email='$email' AND password='$password'");
       $check_login_query = mysqli_num_rows($check_database_query);
 
-      echo "Test1";
 
       if ($check_login_query == 1) {
+            echo "test";
             $row = mysqli_fetch_array($check_database_query);
             $username = $row['username'];   // get username from DB
+
+            $user_closed_query = mysqli_query($con, "SELECT * FROM users WHERE email='$email' AND user_closed='yes' ");
+            if(mysqli_num_rows($user_closed_query) == 1){
+                  $reopen = mysqli_query($con, "UPDATE users SET user_closed='no' WHERE email='$email' ");
+            }
 
             $_SESSION['username'] = $username; // saving value of username 
             header("Location: index.php");
             exit();
+      }
+      else{
+            array_push($error_array, "Incorrect Login<br>");
       }
 
      
